@@ -56,16 +56,16 @@ const Booking: React.FC = () => {
       
       <div className={styles.statusTabs}>
         <button 
+          className={`${styles.tab} ${filters.status === 'all' ? styles.activeTab : ''}`}
+          onClick={() => setFilters({ ...filters, status: 'all' })}
+        >
+          All
+        </button>
+        <button 
           className={`${styles.tab} ${filters.status === 'upcoming' ? styles.activeTab : ''}`}
           onClick={() => setFilters({ ...filters, status: 'upcoming' })}
         >
           Upcoming
-        </button>
-        <button 
-          className={`${styles.tab} ${filters.status === 'today' ? styles.activeTab : ''}`}
-          onClick={() => setFilters({ ...filters, status: 'today' })}
-        >
-          Today
         </button>
         <button 
           className={`${styles.tab} ${filters.status === 'previous' ? styles.activeTab : ''}`}
@@ -118,9 +118,9 @@ const Booking: React.FC = () => {
             name={booking.name}
             capacity={booking.capacity}
             startingPrice={booking.startingPrice}
-            imageUrl={booking.imageUrl}
+            imageUrl={booking.images[0]}
             yachtId={booking.yacht}
-            listStatus={(booking.listStatus as 'notListed' | 'listed' | 'denied') || 'denied'}
+            listStatus={(booking.isVerifiedByAdmin as 'requested' | 'approved' | 'denied')}
           />
         ))}
       </div>

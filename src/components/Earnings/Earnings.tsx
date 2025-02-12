@@ -16,7 +16,7 @@ const Earnings: React.FC = () => {
       const response = await adminAPI.getPayments({
         period: selectedPeriod
       });
-      setPayments(response.payments[0] || null);
+      setPayments(response.allEarnings || null);
     } catch (err) {
       setError('Failed to fetch earnings data');
       console.error('Error fetching earnings:', err);
@@ -28,6 +28,7 @@ const Earnings: React.FC = () => {
   useEffect(() => {
     fetchPayments();
   }, [selectedPeriod]);
+
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-IN', {
@@ -98,7 +99,7 @@ const Earnings: React.FC = () => {
             </div>
             <div className={styles.statsValue}>
               <IndianRupee className={styles.currencyIcon} size={24} />
-              {formatCurrency(payments.totalEarnings).replace('₹', '')}
+              {formatCurrency(payments.totalEarning).replace('₹', '')}
             </div>
             <div className={styles.statsPeriod}>
               {selectedPeriod === 'total' ? 'All Time' : 

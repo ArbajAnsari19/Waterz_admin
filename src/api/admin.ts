@@ -33,11 +33,11 @@ export interface BookingData {
   name: string;
   capacity: number;
   startingPrice: string;
-  imageUrl: string;
+  images: string[];
   yacht: string;
   status: string;
   bookedBy: string;
-  listStatus: string;
+  isVerifiedByAdmin: string;
 }
 
 export interface BookingsResponse {
@@ -110,7 +110,7 @@ export interface SuperAgentData {
 // earnings
 export interface PaymentData {
     totalBookings: number;
-    totalEarnings: number;
+    totalEarning: number;
   }
   
   export interface EarningsFilters {
@@ -118,7 +118,7 @@ export interface PaymentData {
   }
   
   export interface PaymentResponse {
-    payments: PaymentData[];
+    allEarnings: PaymentData;
   }
 
 // dashboard

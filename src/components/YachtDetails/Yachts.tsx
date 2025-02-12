@@ -6,7 +6,7 @@ import { Search } from "lucide-react";
 
 interface ComponentFilters {
   type: 'search' | 'listing';
-  listingStatus: 'all' | 'recent' | 'requests' | 'denied';
+  listingStatus: 'all' | 'recent' | 'requested' | 'denied';
 }
 
 const Yachts: React.FC = () => {
@@ -24,7 +24,7 @@ const Yachts: React.FC = () => {
       setIsLoading(true);
       setError(null);
       const response = await adminAPI.getYachts({
-        status: filters.listingStatus === 'requests' ? 'requested' : filters.listingStatus,
+        status: filters.listingStatus,
         searchName: searchName
       });
       // Access the yachts array from the response
@@ -41,6 +41,7 @@ const Yachts: React.FC = () => {
   useEffect(() => {
     fetchYachts();
   }, [filters]);
+
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,8 +104,8 @@ const Yachts: React.FC = () => {
               Recently Listed
             </button>
             <button 
-              className={`${styles.filterTab} ${filters.listingStatus === 'requests' ? styles.activeFilterTab : ''}`}
-              onClick={() => setFilters({ ...filters, listingStatus: 'requests' })}
+              className={`${styles.filterTab} ${filters.listingStatus === 'requested' ? styles.activeFilterTab : ''}`}
+              onClick={() => setFilters({ ...filters, listingStatus: 'requested' })}
             >
               Listing Requests
             </button>
@@ -125,9 +126,9 @@ const Yachts: React.FC = () => {
             name={yacht.name}
             capacity={yacht.capacity}
             startingPrice={yacht.startingPrice}
-            imageUrl={yacht.imageUrl}
+            imageUrl={yacht.images[0]}
             yachtId={yacht._id}
-            listStatus={(yacht.listStatus as 'notListed' | 'listed' | 'denied') || 'listed'}
+            listStatus={(yacht.isVerifiedByAdmin as 'requested' | 'approved' | 'denied')}
           />
         ))}
       </div>

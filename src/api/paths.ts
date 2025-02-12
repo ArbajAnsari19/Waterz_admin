@@ -39,12 +39,12 @@ export const paths = {
   createYacht: `${owner}/create`,
 
   // Admin endpoints
-  getAllYatchs: `${admin}/getAllYatchs`,
+  getAllYatchs: `${admin}/filtered-yatchs`,
   getAllOwners: `${admin}/getAllOwners`,
-  getAllCustomers: `${admin}/getAllCustomers`,
-  getAllBookings: `${admin}/getAllBookings`,
+  getAllCustomers: `${admin}/filtered-customers`,
+  getAllBookings: `${admin}/filtered-bookings`,
   getAllQueries: `${admin}/getAllQueries`,
-  getAllPayments: `${admin}/getAllPayments`,
+  getAllPayments: `${admin}/filtered-Earning`,
   getAllSuperAgents: `${admin}/getAllSuperAgents`,
   getAllAgents: `${admin}/getAllAgents`,
   getYatchOwner: `${admin}/yatchOwner`,

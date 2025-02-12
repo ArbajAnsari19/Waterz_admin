@@ -8,7 +8,7 @@ interface YachtCardProps {
   startingPrice: string;
   imageUrl: string;
   yachtId: string; 
-  listStatus: 'notListed' | 'listed' | 'denied';
+  listStatus: 'requested' | 'approved' | 'denied';
 }
 
 const BookedCard: React.FC<YachtCardProps> = ({ name, capacity, startingPrice, imageUrl, yachtId, listStatus }) => {
