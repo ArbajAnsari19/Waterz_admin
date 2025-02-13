@@ -1,39 +1,20 @@
-// import { useEffect, useState } from 'react';
-// import { useLocation } from 'react-router-dom';
-import { Analytic, AnalyticsData } from '../../api/admin';
-// import { adminAPI } from '../../api/admin';
+import { useEffect, useState } from 'react';
+import type { Analytics } from '../../api/admin';
+import { adminAPI } from '../../api/admin';
 import styles from '../../styles/Analytics/Analytics.module.css';
 import { Calendar } from 'lucide-react';
 
-const AnalyticsBox = ({ data }: { data: AnalyticsData }) => {
-  const getPeriodTitle = (period: string) => {
-    switch (period) {
-      case 'yesterday':
-        return "Today's Bookings";
-      case 'last_week':
-        return 'Bookings This Week';
-      case 'last_month':
-        return 'Bookings This Month';
-      case 'last_year':
-        return 'Bookings This Year';
-      default:
-        return '';
-    }
-  };
+interface AnalyticsBoxProps {
+  title: string;
+  count: number;
+  change: number | null;
+  comparison: string;
+}
 
-  const getComparisonText = (period: string) => {
-    switch (period) {
-      case 'yesterday':
-        return 'vs yesterday';
-      case 'last_week':
-        return 'vs last week';
-      case 'last_month':
-        return 'vs last month';
-      case 'last_year':
-        return 'vs last year';
-      default:
-        return '';
-    }
+const AnalyticsBox = ({ title, count, change, comparison }: AnalyticsBoxProps) => {
+  const formatChange = (change: number | null): string => {
+    if (change === null) return 'N/A';
+    return change >= 0 ? `+${change}%` : `${change}%`;
   };
 
   return (
@@ -43,111 +24,102 @@ const AnalyticsBox = ({ data }: { data: AnalyticsData }) => {
           <Calendar size={20} />
         </div>
         <div className={styles.count}>
-          {data.count.toLocaleString()}
+          {count.toLocaleString()}
         </div>
         <div className={styles.title}>
-          {getPeriodTitle(data.period)}
+          {title}
         </div>
       </div>
-    <div className={styles.analyticsContent}>
-        <div className={styles.changeIndicator} style={{
-            color: data.change.startsWith('+') ? '#22c55e' : '#ef4444'
-          }}>
-            {data.change}
-          </div>
-          <div className={styles.vsText}>
-            {getComparisonText(data.period)}
-          </div>
+      <div className={styles.analyticsContent}>
+        <div 
+          className={styles.changeIndicator} 
+          style={{
+            color: change === null ? '#666' : change >= 0 ? '#22c55e' : '#ef4444'
+          }}
+        >
+          {formatChange(change)}
         </div>
+        <div className={styles.vsText}>
+          {comparison}
+        </div>
+      </div>
     </div>
   );
 };
 
 const Analytics = () => {
+  const [analyticsData, setAnalyticsData] = useState<Analytics | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-//   const [analyticsData, setAnalyticsData] = useState<Analytic | null>(null);
-//   const [isLoading, setIsLoading] = useState(true);
-//   const [error, setError] = useState<string | null>(null);
-//   const location = useLocation();
+  useEffect(() => {
+    const fetchAnalytics = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const response = await adminAPI.getAnalytics();
+        setAnalyticsData(response.analytics);
+      } catch (err) {
+        setError('Failed to fetch analytics data');
+        console.error('Error fetching analytics:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-//   const getRouteKey = (pathname: string): string => {
-//     // Remove leading slash and get the first segment of the path
-//     const route = pathname.substring(1).split('/')[0];
-//     return route || 'booking'; // Default to 'booking' if no route
-//   };
+    fetchAnalytics();
+  }, []);
 
-//   useEffect(() => {
-//     const fetchAnalytics = async () => {
-//       try {
-//         setIsLoading(true);
-//         setError(null);
-//         const route = getRouteKey(location.pathname);
-//         const data = await adminAPI.getAnalytics(route);
-//         setAnalyticsData(data);
-//       } catch (err) {
-//         setError('Failed to fetch analytics data');
-//         console.error('Error fetching analytics:', err);
-//       } finally {
-//         setIsLoading(false);
-//       }
-//     };
+  if (isLoading) {
+    return <div className={styles.loading}>Loading analytics...</div>;
+  }
 
-//     fetchAnalytics();
-//   }, [location.pathname]);
+  if (error) {
+    return <div className={styles.error}>{error}</div>;
+  }
 
-//   if (isLoading) {
-//     return <div className={styles.loading}>Loading analytics...</div>;
-//   }
+  if (!analyticsData) {
+    return null;
+  }
 
-//   if (error) {
-//     return <div className={styles.error}>{error}</div>;
-//   }
-
-//   if (!analyticsData) {
-//     return null;
-//   }
-
-//   const routeKey = getRouteKey(location.pathname);
-//   const analyticsArray = analyticsData[routeKey] || [];
-
-  const analyticsData: Analytic = {
-    booking: [
-      {
-        period: "yesterday",
-        count: 120,
-        change: "+10%",
-      },
-      {
-        period: "last_week",
-        count: 850,
-        change: "-5%",
-      },
-      {
-        period: "last_month",
-        count: 3400,
-        change: "+15%",
-      },
-      {
-        period: "last_year",
-        count: 40200,
-        change: "+8%",
-      },
-    ],
-    agent: [],
-    customer: [],
-    superagent: [],
-    yacht: [],
-    earnings: []
-  };
-
-  const analyticsArray = analyticsData.booking || [];
-   
+  const analyticsBoxes = [
+    {
+      title: "Today's Bookings",
+      count: analyticsData.today.count,
+      change: analyticsData.today.percentageChange,
+      comparison: 'vs yesterday'
+    },
+    {
+      title: "This Week's Bookings",
+      count: analyticsData.weekly.current,
+      change: analyticsData.weekly.percentageChange,
+      comparison: 'vs last week'
+    },
+    {
+      title: "This Month's Bookings",
+      count: analyticsData.monthly.current,
+      change: analyticsData.monthly.percentageChange,
+      comparison: 'vs last month'
+    },
+    {
+      title: "This Year's Bookings",
+      count: analyticsData.yearly.current,
+      change: analyticsData.yearly.percentageChange,
+      comparison: 'vs last year'
+    }
+  ];
 
   return (
     <div className={styles.analyticsWrapper}>
       <div className={styles.analyticsContainer}>
-        {analyticsArray.map((data, index) => (
-          <AnalyticsBox key={data.period} data={data} />
+        {analyticsBoxes.map((box, index) => (
+          <AnalyticsBox
+            key={index}
+            title={box.title}
+            count={box.count}
+            change={box.change}
+            comparison={box.comparison}
+          />
         ))}
       </div>
     </div>

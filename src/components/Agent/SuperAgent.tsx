@@ -86,9 +86,9 @@ const SuperAgent: React.FC = () => {
                 <td>{superAgent.email}</td>
                 <td>{superAgent.phone}</td>
                 <td>
-                  {superAgent.agentCount > 0 ? (
+                  {superAgent.agents.length > 0 ? (
                     <a href="#" className={styles.viewLink}>
-                      {superAgent.agentCount} ( view details )
+                      {superAgent.agents.length} ( view details )
                     </a>
                   ) : (
                     '-'

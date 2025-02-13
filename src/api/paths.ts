@@ -45,12 +45,12 @@ export const paths = {
   getAllBookings: `${admin}/filtered-bookings`,
   getAllQueries: `${admin}/getAllQueries`,
   getAllPayments: `${admin}/filtered-Earning`,
-  getAllSuperAgents: `${admin}/getAllSuperAgents`,
-  getAllAgents: `${admin}/getAllAgents`,
+  getAllSuperAgents: `${admin}/getFilteredSuperAgents`,
+  getAllAgents: `${admin}/filtered-agent`,
   getYatchOwner: `${admin}/yatchOwner`,
   getAllBookingByOwner: `${admin}/owners-Booking`,
   getAnalytics: `${admin}/analytics`,
-  getDashboardData: `${admin}/dashboardData`,
+  getDashboardData: `${admin}/getAdminDashboard`,
 };
 
 

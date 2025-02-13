@@ -1,20 +1,28 @@
 import { apiClient } from "./apiClient";
 import paths from "./paths";
 
-export interface AnalyticsData {
-  period: string;
+interface TodayAnalytics {
   count: number;
-  change: string;
+  percentageChange: number;
 }
 
-export interface Analytic {
-  [key: string]: AnalyticsData[]; // Allow dynamic keys
-  booking: AnalyticsData[];
-  agent: AnalyticsData[];
-  customer: AnalyticsData[];
-  superagent: AnalyticsData[];
-  yacht: AnalyticsData[];
-  earnings: AnalyticsData[];
+interface PeriodAnalytics {
+  current: number;
+  lastWeek?: number;
+  lastMonth?: number;
+  lastYear?: number;
+  percentageChange: number | null;
+}
+
+export interface Analytics {
+  today: TodayAnalytics;
+  weekly: PeriodAnalytics;
+  monthly: PeriodAnalytics;
+  yearly: PeriodAnalytics;
+}
+
+export interface AnalyticsResponse {
+  analytics: Analytics;
 }
 
 export interface BookingFilters {
@@ -94,7 +102,7 @@ export interface SuperAgentData {
     email: string;
     phone: string;
     role: string;
-    agentCount: number;
+    agents: string[];
     isVerified: boolean;
     createdAt: string;
   }
@@ -122,35 +130,33 @@ export interface PaymentData {
   }
 
 // dashboard
-
 export interface BookingDataPoint {
-    month: string;
-    totalBookings: number;
-    customerBookings: number;
-    agentBookings: number;
-    year?: string; // for Overall filter
-  }
-  
-  export interface EarningDataPoint {
-    month: string;
-    amount: number;
-    year?: string; // for Overall filter
-  }
-  
-  export interface DistributionData {
-    customerPercentage: number;
-    agentPercentage: number;
-    customerValue: number;
-    agentValue: number;
-  }
-  
-  export interface DashboardFilters {
-    bookingView: 'thisYear' | 'overall';
-    earningView: 'thisYear' | 'overall';
-    distributionView: 'thisYear' | 'thisMonth';
-  }
-  
-  export interface DashboardResponse {
+  month: string;
+  totalBookings: number;
+  customerBookings: number;
+  agentBookings: number;
+}
+
+export interface EarningDataPoint {
+  month: string;
+  amount: number;
+}
+
+export interface DistributionData {
+  customerPercentage: number | null;
+  agentPercentage: number | null;
+  customerValue: number;
+  agentValue: number;
+}
+
+export interface DashboardFilters {
+  bookingView: 'thisYear' | 'overall';
+  earningView: 'thisYear' | 'overall';
+  distributionView: 'thisYear' | 'thisMonth';
+}
+
+export interface DashboardResponse {
+  dashboard: {
     bookings: {
       data: BookingDataPoint[];
       total: number;
@@ -166,11 +172,17 @@ export interface BookingDataPoint {
       earnings: DistributionData;
     };
   }
+}
 
 
 export const adminAPI = {
-  getAnalytics: async (route: string): Promise<Analytic> => {
-    const response = await apiClient.get(`${paths.getAnalytics}?route=${route}`);
+  getAnalytics: async (): Promise<AnalyticsResponse> => {
+    const token = localStorage.getItem('token');
+    const response = await apiClient.get(paths.getAnalytics, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response.data;
   },
 
