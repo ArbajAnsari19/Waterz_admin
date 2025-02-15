@@ -64,6 +64,11 @@ import Add from './components/Add/Add';
 import Dashboard from './components/Dashboard/Dashboard';
 import YachtForm from './components/YatchForm/YatchForm';
 import Review from './components/YachtDetails/YatchReview';
+import AgentDetails from './components/Agent/AgentDetails';
+import SuperAgentDetails from './components/Agent/SuperAgentDetails';
+import AgentForm from './components/Agent/AgentFrom';
+import SuperAgentSignupForm from './components/Agent/SuperAgentForm';
+
 function App() {
   const location = useLocation();
   const token = localStorage.getItem('token');
@@ -82,12 +87,16 @@ function App() {
         <Route path="/choose" element={<MainLayout><Choose/></MainLayout>} />
         <Route path="/yachts" element={<AdminLayout><Yachts/></AdminLayout>} />
         <Route path="/yacht/:id" element={<AdminLayout><Details/></AdminLayout>} />
-        <Route path="/booking-details" element={<MainLayout><BookingDetails/></MainLayout>} />
+        <Route path="/booking-details/:id" element={<AdminLayout><BookingDetails/></AdminLayout>} />
         <Route path="/customer" element={<AdminLayout><Customer/></AdminLayout>} />
         <Route path="/agent" element={<AdminLayout><Agent/></AdminLayout>} />
+        <Route path="/agent-profile/:id" element={<AdminLayout><AgentDetails/></AdminLayout>} />
         <Route path="/superagent" element={<AdminLayout><SuperAgent/></AdminLayout>} />
+        <Route path="/super-agent-profile/:id" element={<AdminLayout><SuperAgentDetails/></AdminLayout>} />
         <Route path="/earnings" element={<AdminLayout><Earnings/></AdminLayout>} />
         <Route path="/add" element={<AdminLayout><Add/></AdminLayout>} />
+        <Route path="/add-agent" element={<AdminLayout><AgentForm/></AdminLayout>} />
+        <Route path="/add-superagent" element={<AdminLayout><SuperAgentSignupForm/></AdminLayout>} />
         <Route path="/add-yacht" element={<AdminLayout><YachtForm/></AdminLayout>} />
         <Route path="/yatch-review" element={<AdminLayout><Review/></AdminLayout>} />
         <Route path="/dashboard" element={<AdminLayout><Dashboard/></AdminLayout>} />

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { adminAPI, BookingData } from "../../api/admin";
-import BookedCard from "../Layouts/BookedCard";
 import styles from "../../styles/YachtDetails/Yachts.module.css";
 import { Search } from "lucide-react";
+import YachtCard from "../Layouts/YatchCard";
 
 interface ComponentFilters {
   type: 'search' | 'listing';
@@ -121,14 +121,14 @@ const Yachts: React.FC = () => {
 
       <div className={styles.yachtsGrid}>
         {yachts.map((yacht) => (
-          <BookedCard
+          <YachtCard
             key={yacht._id}
             name={yacht.name}
             capacity={yacht.capacity}
             startingPrice={yacht.startingPrice}
             imageUrl={yacht.images[0]}
             yachtId={yacht._id}
-            listStatus={(yacht.isVerifiedByAdmin as 'requested' | 'approved' | 'denied')}
+            listStatus={(yacht.isVerifiedByAdmin as 'requested' | 'accepted' | 'denied')}
           />
         ))}
       </div>

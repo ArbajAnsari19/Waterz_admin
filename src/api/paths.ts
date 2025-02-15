@@ -5,6 +5,8 @@ const booking = URL + "/booking";
 const customer = URL + "/customer";
 const admin = URL + "/admin";
 const owner = URL + "/owner";
+const superagent = URL + "/superagent";
+
 export const paths = {
   // Auth endpoints
   login: `${signUp}/signin`,
@@ -13,6 +15,9 @@ export const paths = {
   verifyOtp: `${signUp}/verify-otp`,
   logout: `${userBaseURL}/logout`,
   googleAuth: `${userBaseURL}/google`,
+  signup: `${signUp}/signup`,
+  registerAgent: `${signUp}/register/agent`,
+  registerSuperAgent: `${signUp}/register/superagent`,
   
   // User endpoints
   getUserProfile: `${userBaseURL}/profile`,
@@ -38,6 +43,13 @@ export const paths = {
   // owner
   createYacht: `${owner}/create`,
 
+  // superagent
+  getAgent:`${superagent}/agent-detail`,
+  getSuperAgent:`${admin}/superAgent-detail`,
+  removeAgent:`${superagent}/remove-agent`,
+  removeYacht:`${superagent}/delete-yacht`,
+
+
   // Admin endpoints
   getAllYatchs: `${admin}/filtered-yatchs`,
   getAllOwners: `${admin}/getAllOwners`,
@@ -51,6 +63,15 @@ export const paths = {
   getAllBookingByOwner: `${admin}/owners-Booking`,
   getAnalytics: `${admin}/analytics`,
   getDashboardData: `${admin}/getAdminDashboard`,
+  deleteCustomer: `${admin}/delete-customer`,
+
+  isApproved: `${admin}/isApproved`,
+  updateAgentCommison: `${admin}/update-agent-comission`,
+  updateSuperAgentCommison: `${admin}/update-superAgent-comission`,
+  updatePricing: `${admin}/updatePricing`,
+
+
+
 };
 
 

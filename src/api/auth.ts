@@ -13,15 +13,34 @@ interface SignupData {
   email: string;
   phone: string;
   password: string;
-  type: string;
+  role: string;
+  agreeToTerms: boolean;
 }
 
 interface OTPData {
   otp: number;
+  token: string;
+  role: string;
 }
 
 interface EmailData {
   otp: string;
+}
+
+interface Registration {
+  // name: string;
+  dateOfBirth: string;
+  // contactNumber: string;
+  // email: string;
+  personalAddress: string;
+  username: string;
+  experience: string;
+  accountHolderName: string;
+  accountNumber: string;
+  bankName: string;
+  ifscCode: string;
+  commission: string;
+  imgUrl: string;
 }
 
 export const authAPI = {
@@ -32,6 +51,16 @@ export const authAPI = {
 
   signup: async (userData: SignupData) => {
     const response = await nonAuthApiClient.post(paths.signupAdmin, userData);
+    return response.data;
+  },
+
+  signupAgent: async (userData: SignupData) => {
+    const response = await nonAuthApiClient.post(`${paths.signup}/agent`, userData);
+    return response.data;
+  },
+
+  signupSuperAgent: async (userData: SignupData) => {
+    const response = await nonAuthApiClient.post(`${paths.signup}/super-agent`, userData);
     return response.data;
   },
 
@@ -59,4 +88,15 @@ export const authAPI = {
     const response = await apiClient.put(paths.updateUserProfile, userData);
     return response.data;
   },
+
+  registerAgent: async (userData: Registration) => {
+    const response = await nonAuthApiClient.post(paths.registerAgent, userData);
+    return response.data;
+  },
+
+  registerSuperAgent: async (userData: Registration) => {
+    const response = await nonAuthApiClient.post(paths.registerSuperAgent, userData);
+    return response.data;
+  },
+
 };

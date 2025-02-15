@@ -1,7 +1,12 @@
+export interface Prices {
+  peakTime: number;
+  nonPeakTime: number;
+}
+
 export interface YachtPrice {
-    sailing: number;
-    still: number;
-  }
+  sailing: Prices;
+  anchoring: Prices;
+}
   
   export interface Crew {
     name: string;
@@ -23,6 +28,7 @@ export interface YachtPrice {
     dimension: string;
     crews: Crew[];
     images: string[];
+    isVerifiedByAdmin?: 'requested' | 'accepted' | 'denied';
 }
 
 export interface Idealyacht{

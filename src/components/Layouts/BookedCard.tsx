@@ -7,15 +7,15 @@ interface YachtCardProps {
   capacity: number;
   startingPrice: string;
   imageUrl: string;
-  yachtId: string; 
-  listStatus: 'requested' | 'approved' | 'denied';
+  bookingId: string; 
+  booking?: any;
 }
 
-const BookedCard: React.FC<YachtCardProps> = ({ name, capacity, startingPrice, imageUrl, yachtId, listStatus }) => {
+const BookedCard: React.FC<YachtCardProps> = ({ name, capacity, startingPrice, imageUrl, bookingId, booking }) => {
   const navigate = useNavigate();
 
   const handleBookNow = () => {
-    navigate(`/yacht/${yachtId}`, {state: {yachtId, listStatus }});
+    navigate(`/booking-details/${bookingId}`, {state: {booking: booking}});
   };
 
   return (

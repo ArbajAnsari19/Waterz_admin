@@ -84,6 +84,8 @@ export interface AgentData {
     isVerified: boolean;
     superagentName: string;
     createdAt: string;
+    isVerifiedByAdmin: string;
+    commissionRate: number;
   }
   
   export interface AgentFilters {
@@ -105,7 +107,9 @@ export interface SuperAgentData {
     agents: string[];
     isVerified: boolean;
     createdAt: string;
-  }
+    isVerifiedByAdmin: string;
+    commissionRate: number;
+}
   
   export interface SuperAgentFilters {
     searchQuery?: string;
@@ -174,6 +178,32 @@ export interface DashboardResponse {
   }
 }
 
+// delete customer
+export interface DeleteParams {
+  customerId: string;
+}
+
+export interface DeleteResponse {
+  message: string;
+}
+
+// Approve agent
+export interface ApproveAgent {
+  id: string;
+  approved: string;
+  commision: number;
+}
+
+
+// approve yacht
+export interface ApproveYacht {
+  sailingPeakTimePrice: number;
+  sailingNonPeakTimePrice: number;
+  anchoringPeakTimePrice: number;
+  anchoringNonPeakTimePrice: number;
+  approved: string;
+  yatchId: string;
+}
 
 export const adminAPI = {
   getAnalytics: async (): Promise<AnalyticsResponse> => {
@@ -215,4 +245,74 @@ export const adminAPI = {
     const response = await apiClient.post(paths.getDashboardData, filters);
     return response.data;
   },
+  deleteCustomer: async (customerId: string): Promise<DeleteResponse> => {
+    const response = await apiClient.delete(`${paths.deleteCustomer}/${customerId}`);
+    return response.data;
+  },
+
+
+  getAgentById: async (id: string): Promise<any> => {
+    const token = localStorage.getItem("token");
+    const response = await apiClient.get(`${paths.getAgent}/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return response.data;
+  },
+  removeAgentById: async (id: string): Promise<any> => {
+    const token = localStorage.getItem("token");
+    const response = await apiClient.get(`${paths.removeAgent}/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return response.data;
+  },
+
+  approveAgent: async (filters: ApproveAgent): Promise<any> => {
+    const response = await apiClient.post(`${paths.isApproved}/agent`, filters);
+    return response.data;
+  },
+
+  updateAgentCommison: async (filters: ApproveAgent): Promise<any> => {
+    const response = await apiClient.post(`${paths.updateAgentCommison}`, filters);
+    return response.data;
+  },
+
+  getSuperAgentById: async (id: string): Promise<any> => {
+    const token = localStorage.getItem("token");
+    const response = await apiClient.get(`${paths.getSuperAgent}/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return response.data;
+  },
+
+  approveSuperAgent: async (filters: ApproveAgent): Promise<any> => { 
+    const response = await apiClient.post(`${paths.isApproved}/superagent`, filters);
+    return response.data;
+  },
+  
+  updateSuperAgentCommison: async (filters: ApproveAgent): Promise<any> => {
+    const response = await apiClient.post(`${paths.updateSuperAgentCommison}/${filters.id}`, filters);
+    return response.data;
+  },
+
+  approveYacht: async (filters: ApproveYacht): Promise<any> => {
+    const response = await apiClient.post(`${paths.isApproved}/yatch/${filters.yatchId}`, filters);
+    return response.data;
+  },
+
+  deleteYacht: async (yachtId: string): Promise<DeleteResponse> => {
+    const response = await apiClient.delete(`${paths.removeYacht}/${yachtId}`);
+    return response.data;
+  },
+
+  updateYachtPricing: async (filters: ApproveYacht): Promise<any> => {
+    const response = await apiClient.post(`${paths.updatePricing}`, filters);
+    return response.data;
+  },
+
 };
