@@ -68,7 +68,8 @@ import AgentDetails from './components/Agent/AgentDetails';
 import SuperAgentDetails from './components/Agent/SuperAgentDetails';
 import AgentForm from './components/Agent/AgentFrom';
 import SuperAgentSignupForm from './components/Agent/SuperAgentForm';
-
+import Query from './components/Query/Query';
+import PromoCodePage from './components/PromoCode/PromoCode';
 function App() {
   const location = useLocation();
   const token = localStorage.getItem('token');
@@ -100,6 +101,8 @@ function App() {
         <Route path="/add-yacht" element={<AdminLayout><YachtForm/></AdminLayout>} />
         <Route path="/yatch-review" element={<AdminLayout><Review/></AdminLayout>} />
         <Route path="/dashboard" element={<AdminLayout><Dashboard/></AdminLayout>} />
+        <Route path="/queries" element={<AdminLayout><Query/></AdminLayout>} />
+        <Route path="/promo-codes" element={<AdminLayout><PromoCodePage/></AdminLayout>} />
       </Routes>
       <ToastContainer 
         position="top-right"

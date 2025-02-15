@@ -21,14 +21,14 @@ interface SignupResponse {
 
 interface RegistrationData {
   dateOfBirth: string;
-  personalAddress: string;
+  address: string;
   username: string;
   experience: number;
   accountHolderName: string;
   accountNumber: string;
   bankName: string;
   ifscCode: string;
-  commission: number;
+  commissionRate: number;
   imgUrl: string;
   age: number;
   id: string;
@@ -60,14 +60,14 @@ const AgentSignupForm: React.FC = () => {
   // Second step form data
   const [registrationData, setRegistrationData] = useState<RegistrationData>({
     dateOfBirth: '',
-    personalAddress: '',
+    address: '',
     username: '',
     experience: 0,
     accountHolderName: '',
     accountNumber: '',
     bankName: '',
     ifscCode: '',
-    commission: 0,
+    commissionRate: 0,
     imgUrl: '',
     age: 0,
     id: id || ''
@@ -105,14 +105,14 @@ const AgentSignupForm: React.FC = () => {
 
   const validateRegistrationData = () => {
     if (!registrationData.dateOfBirth) return 'Date of birth is required';
-    if (!registrationData.personalAddress.trim()) return 'Personal address is required';
+    if (!registrationData.address.trim()) return 'Personal address is required';
     if (!registrationData.age) return 'Age is required';
     if (!registrationData.experience) return 'Experience is required';
     if (!registrationData.accountHolderName.trim()) return 'Account holder name is required';
     if (!registrationData.accountNumber.trim()) return 'Account number is required';
     if (!registrationData.bankName.trim()) return 'Bank name is required';
     if (!registrationData.ifscCode.trim()) return 'IFSC code is required';
-    if (!registrationData.commission) return 'Commission is required';
+    if (!registrationData.commissionRate) return 'Commission is required';
     if (!registrationData.imgUrl) return 'Profile picture is required';
 
     // Additional validations can be added here
@@ -217,7 +217,7 @@ const AgentSignupForm: React.FC = () => {
     console.log("registrationData", registrationData)
     try {
       const response = await authAPI.registerAgent(registrationData);
-      navigate(`/agent-profile/${response._id}`, { state: { agent: response } });
+      navigate(`/agent-profile/${response.user._id}`, { state: { agent: response.user } });
     } catch (err: any) {
       setError(err.message || 'Failed to register agent');
     } finally {
@@ -386,8 +386,8 @@ const AgentSignupForm: React.FC = () => {
             <label htmlFor="personalAddress">Personal Address*</label>
             <textarea
               id="personalAddress"
-              value={registrationData.personalAddress}
-              onChange={(e) => setRegistrationData({ ...registrationData, personalAddress: e.target.value })}
+              value={registrationData.address}
+              onChange={(e) => setRegistrationData({ ...registrationData, address: e.target.value })}
             />
           </div>
 
@@ -396,8 +396,8 @@ const AgentSignupForm: React.FC = () => {
             <input
               type="number"
               id="commission"
-              value={registrationData.commission}
-              onChange={(e) => setRegistrationData({ ...registrationData, commission: Number(e.target.value) })}
+              value={registrationData.commissionRate}
+              onChange={(e) => setRegistrationData({ ...registrationData, commissionRate: Number(e.target.value) })}
               min="0"
               max="100"
               step="0.1"

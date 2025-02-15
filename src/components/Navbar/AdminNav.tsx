@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from '../../styles/Navbar/AdminNav.module.css';
-import { Menu, X, LayoutDashboard, Ship, Calendar, Users, UserCircle, DollarSign, PlusCircle, House } from 'lucide-react';
+import { Menu, X, LayoutDashboard, BadgePercent , Ship, Calendar, Users, MessageCircleQuestion , UserCircle, DollarSign, PlusCircle, House } from 'lucide-react';
 
 const AdminNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +17,8 @@ const AdminNavbar = () => {
     { path: '/superagent', label: 'Superagent', icon: UserCircle },
     { path: '/earnings', label: 'Earnings', icon: DollarSign },
     { path: '/add', label: 'Add', icon: PlusCircle },
+    { path: '/queries', label: 'Queries', icon: MessageCircleQuestion },
+    { path: '/promo-codes', label: 'Promo Code', icon: BadgePercent },
   ];
 
   const toggleMenu = () => {

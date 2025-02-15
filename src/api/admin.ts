@@ -205,6 +205,61 @@ export interface ApproveYacht {
   yatchId: string;
 }
 
+// Query
+export interface QueryData {
+  id: string;
+  name: string;
+  email: string;
+  query: string;
+  queryAnswer: string;
+}
+
+// Promo code
+export interface TargetedUsers {
+  userIds: string[];  // Using string instead of Types.ObjectId
+  userType: "agent" | "customer";
+  userModel: "User" | "Agent";
+}
+
+export interface UserUsage {
+  userId: string;  // Using string instead of mongoose.Types.ObjectId
+  usageCount: number;
+}
+
+export interface PromoCode {
+  _id?: string;
+  code: string;
+  description: string;
+  validFor: string;
+  discountType: string;
+  discountValue: number;
+  targetedUsers?: {
+    userIds: string; 
+    userType: string;
+    userModel: string;
+  };
+  userUsage: {
+    userId: string; 
+    usageCount: number;
+  }[];
+  maxUsagePerUser: number;
+  totalUsageLimit: number;
+  totalUsageCount: number;
+  minBookingAmount?: number;
+  maxDiscountAmount?: number;
+  startDate: string; 
+  expiryDate: string; 
+  isActive: boolean;
+}
+
+export interface PromoCodeResponse {
+  promoCodes: PromoCode[];
+}
+
+export interface CreatePromoCodeResponse {
+  message: string;
+}
+
 export const adminAPI = {
   getAnalytics: async (): Promise<AnalyticsResponse> => {
     const token = localStorage.getItem('token');
@@ -229,8 +284,16 @@ export const adminAPI = {
     const response = await apiClient.post(paths.getAllCustomers, filters);
     return response.data;
   },
+  getAllCustomers: async (): Promise<CustomerResponse> => {
+    const response = await apiClient.get(paths.getCustomers);
+    return response.data;
+  },
   getAgents: async (filters: AgentFilters): Promise<AgentResponse> => {
     const response = await apiClient.post(paths.getAllAgents, filters);
+    return response.data;
+  },
+  getAllAgents: async (): Promise<AgentResponse> => {
+    const response = await apiClient.get(paths.getAgents);
     return response.data;
   },
   getSuperAgents: async (filters: SuperAgentFilters): Promise<SuperAgentResponse> => {
@@ -312,6 +375,26 @@ export const adminAPI = {
 
   updateYachtPricing: async (filters: ApproveYacht): Promise<any> => {
     const response = await apiClient.post(`${paths.updatePricing}`, filters);
+    return response.data;
+  },
+
+  getQueries: async ( ): Promise<QueryData[]> => {
+    const response = await apiClient.get(paths.getAllQueries);
+    return response.data;
+  },
+
+  queryResponse: async (query: QueryData): Promise<any> => {
+    const response = await apiClient.post(`${paths.queryResponse}/${query.id}`, query);
+    return response.data;
+  },
+
+  getAllPromoCodes: async (): Promise<PromoCodeResponse> => {
+    const response = await apiClient.get(paths.getAllPromoCodes);
+    return response.data;
+  }, 
+
+  createPromoCode: async (promoData: Omit<PromoCode, '_id'>): Promise<CreatePromoCodeResponse> => {
+    const response = await apiClient.post(paths.generatePromoCode, promoData);
     return response.data;
   },
 

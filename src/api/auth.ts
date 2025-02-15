@@ -32,14 +32,14 @@ interface Registration {
   dateOfBirth: string;
   // contactNumber: string;
   // email: string;
-  personalAddress: string;
+  address: string;
   username: string;
   experience: number;
   accountHolderName: string;
   accountNumber: string;
   bankName: string;
   ifscCode: string;
-  commission: number;
+  commissionRate: number;
   imgUrl: string;
   age: number;
   id: string;

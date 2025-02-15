@@ -53,12 +53,15 @@ export const paths = {
   // Admin endpoints
   getAllYatchs: `${admin}/filtered-yatchs`,
   getAllOwners: `${admin}/getAllOwners`,
+  getCustomers: `${admin}/getAllCustomers`,
   getAllCustomers: `${admin}/filtered-customers`,
   getAllBookings: `${admin}/filtered-bookings`,
   getAllQueries: `${admin}/getAllQueries`,
+  queryResponse: `${admin}/queryResponse`,
   getAllPayments: `${admin}/filtered-Earning`,
   getAllSuperAgents: `${admin}/getFilteredSuperAgents`,
   getAllAgents: `${admin}/filtered-agent`,
+  getAgents: `${admin}/getAllAgents`,
   getYatchOwner: `${admin}/yatchOwner`,
   getAllBookingByOwner: `${admin}/owners-Booking`,
   getAnalytics: `${admin}/analytics`,
@@ -72,7 +75,8 @@ export const paths = {
   registerAgent: `${admin}/updateAgentProfile`,
   registerSuperAgent: `${admin}/updateSuperAgentProfile`,
 
-
+  getAllPromoCodes: `${admin}/getAllPromoCodes`,
+  generatePromoCode: `${admin}/generate-promo-code`,
 };
 
 

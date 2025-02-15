@@ -408,7 +408,7 @@ const YachtDetails: React.FC = () => {
             <p>
               <b>Where:</b>{" "}
               {typeof yacht.location === "object"
-                ? yacht.location.coordinates.join(", ")
+                ? yacht.location
                 : yacht.location}
             </p>
             <p><b>Duration:</b> According to preference</p>
