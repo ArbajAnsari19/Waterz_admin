@@ -274,7 +274,7 @@ const AgentSignupForm: React.FC = () => {
             <button 
               type="button" 
               onClick={handleSignup}
-              className={styles.signupButton}
+              className={styles.otpButton}
               disabled={isLoading}
             >
               {isLoading ? 'Signing up...' : 'Sign Up'}
@@ -292,7 +292,7 @@ const AgentSignupForm: React.FC = () => {
               <button 
                 type="button" 
                 onClick={handleVerifyOTP}
-                className={styles.verifyButton}
+                className={styles.otpButton}
                 disabled={isLoading}
               >
                 {isLoading ? 'Verifying...' : 'Verify OTP'}
