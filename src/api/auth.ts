@@ -92,12 +92,12 @@ export const authAPI = {
   },
 
   registerAgent: async (userData: Registration) => {
-    const response = await nonAuthApiClient.post(`${paths.registerAgent}/${userData.id}`, userData);
+    const response = await apiClient.post(`${paths.registerAgent}/${userData.id}`, userData);
     return response.data;
   },
 
   registerSuperAgent: async (userData: Registration) => {
-    const response = await nonAuthApiClient.post(`${paths.registerSuperAgent}/${userData.id}`, userData);
+    const response = await apiClient.post(`${paths.registerSuperAgent}/${userData.id}`, userData);
     return response.data;
   },
 
