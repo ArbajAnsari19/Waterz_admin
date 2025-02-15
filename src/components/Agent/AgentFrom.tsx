@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../../styles/Agent/AgentForm.module.css';
 import { authAPI } from '../../api/auth';
@@ -23,13 +23,15 @@ interface RegistrationData {
   dateOfBirth: string;
   personalAddress: string;
   username: string;
-  experience: string;
+  experience: number;
   accountHolderName: string;
   accountNumber: string;
   bankName: string;
   ifscCode: string;
-  commission: string;
+  commission: number;
   imgUrl: string;
+  age: number;
+  id: string;
 }
 
 const AgentSignupForm: React.FC = () => {
@@ -43,6 +45,7 @@ const AgentSignupForm: React.FC = () => {
   const [signupComplete, setSignupComplete] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [signupToken, setSignupToken] = useState<string>('');
+  const [id, setId] = useState<string>('');
 
   // First step form data
   const [signupData, setSignupData] = useState<SignupData>({
@@ -59,14 +62,20 @@ const AgentSignupForm: React.FC = () => {
     dateOfBirth: '',
     personalAddress: '',
     username: '',
-    experience: '',
+    experience: 0,
     accountHolderName: '',
     accountNumber: '',
     bankName: '',
     ifscCode: '',
-    commission: '',
-    imgUrl: ''
+    commission: 0,
+    imgUrl: '',
+    age: 0,
+    id: id || ''
   });
+
+  useEffect(() => {
+    console.log("id", id)
+  }, [id])
 
   const validateSignupData = () => {
     if (!signupData.name.trim()) return 'Name is required';
@@ -97,7 +106,7 @@ const AgentSignupForm: React.FC = () => {
   const validateRegistrationData = () => {
     if (!registrationData.dateOfBirth) return 'Date of birth is required';
     if (!registrationData.personalAddress.trim()) return 'Personal address is required';
-    if (!registrationData.username.trim()) return 'Username is required';
+    if (!registrationData.age) return 'Age is required';
     if (!registrationData.experience) return 'Experience is required';
     if (!registrationData.accountHolderName.trim()) return 'Account holder name is required';
     if (!registrationData.accountNumber.trim()) return 'Account number is required';
@@ -144,11 +153,16 @@ const AgentSignupForm: React.FC = () => {
     setError(null);
 
     try {
-      await authAPI.verifyOTP({ 
-        otp: parseInt(otp),
+      const response = await authAPI.verifyOTP({ 
+        otp: otp,
         token: signupToken,
         role: "agent"
       });
+      if(response){
+        console.log("id", response.id)
+        setId(response.id);
+        registrationData.id = response.id;
+      }
       setSignupComplete(true);
       setCurrentStep('registration');
       setError(null);
@@ -200,7 +214,7 @@ const AgentSignupForm: React.FC = () => {
 
     setIsLoading(true);
     setError(null);
-
+    console.log("registrationData", registrationData)
     try {
       const response = await authAPI.registerAgent(registrationData);
       navigate(`/agent-profile/${response._id}`, { state: { agent: response } });
@@ -315,15 +329,15 @@ const AgentSignupForm: React.FC = () => {
 
       <div className={styles.formGrid}>
         <div className={styles.left}>
-          <div className={styles.formGroup}>
-            <label htmlFor="username">Username*</label>
+            <div className={styles.formGroup}>
+            <label htmlFor="age">Age*</label>
             <input
-              type="text"
-              id="username"
-              value={registrationData.username}
-              onChange={(e) => setRegistrationData({ ...registrationData, username: e.target.value })}
+              type="number"
+              id="age"
+              value={registrationData.age}
+              onChange={(e) => setRegistrationData({ ...registrationData, age: Number(e.target.value) })}
             />
-          </div>
+            </div>
 
           <div className={styles.formGroup}>
             <label htmlFor="dateOfBirth">Date of Birth*</label>
@@ -341,7 +355,7 @@ const AgentSignupForm: React.FC = () => {
               type="number"
               id="experience"
               value={registrationData.experience}
-              onChange={(e) => setRegistrationData({ ...registrationData, experience: e.target.value })}
+              onChange={(e) => setRegistrationData({ ...registrationData, experience: Number(e.target.value) })}
               min="0"
             />
           </div>
@@ -383,7 +397,7 @@ const AgentSignupForm: React.FC = () => {
               type="number"
               id="commission"
               value={registrationData.commission}
-              onChange={(e) => setRegistrationData({ ...registrationData, commission: e.target.value })}
+              onChange={(e) => setRegistrationData({ ...registrationData, commission: Number(e.target.value) })}
               min="0"
               max="100"
               step="0.1"

@@ -16,8 +16,7 @@ export const paths = {
   logout: `${userBaseURL}/logout`,
   googleAuth: `${userBaseURL}/google`,
   signup: `${signUp}/signup`,
-  registerAgent: `${signUp}/register/agent`,
-  registerSuperAgent: `${signUp}/register/superagent`,
+
   
   // User endpoints
   getUserProfile: `${userBaseURL}/profile`,
@@ -42,6 +41,7 @@ export const paths = {
 
   // owner
   createYacht: `${owner}/create`,
+  updateYacht: `${owner}/update`,
 
   // superagent
   getAgent:`${superagent}/agent-detail`,
@@ -69,7 +69,8 @@ export const paths = {
   updateAgentCommison: `${admin}/update-agent-comission`,
   updateSuperAgentCommison: `${admin}/update-superAgent-comission`,
   updatePricing: `${admin}/updatePricing`,
-
+  registerAgent: `${admin}/updateAgentProfile`,
+  registerSuperAgent: `${admin}/updateSuperAgentProfile`,
 
 
 };

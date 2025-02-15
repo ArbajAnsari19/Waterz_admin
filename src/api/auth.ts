@@ -18,7 +18,7 @@ interface SignupData {
 }
 
 interface OTPData {
-  otp: number;
+  otp: string;
   token: string;
   role: string;
 }
@@ -34,13 +34,15 @@ interface Registration {
   // email: string;
   personalAddress: string;
   username: string;
-  experience: string;
+  experience: number;
   accountHolderName: string;
   accountNumber: string;
   bankName: string;
   ifscCode: string;
-  commission: string;
+  commission: number;
   imgUrl: string;
+  age: number;
+  id: string;
 }
 
 export const authAPI = {
@@ -90,12 +92,12 @@ export const authAPI = {
   },
 
   registerAgent: async (userData: Registration) => {
-    const response = await nonAuthApiClient.post(paths.registerAgent, userData);
+    const response = await nonAuthApiClient.post(`${paths.registerAgent}/${userData.id}`, userData);
     return response.data;
   },
 
   registerSuperAgent: async (userData: Registration) => {
-    const response = await nonAuthApiClient.post(paths.registerSuperAgent, userData);
+    const response = await nonAuthApiClient.post(`${paths.registerSuperAgent}/${userData.id}`, userData);
     return response.data;
   },
 

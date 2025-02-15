@@ -296,7 +296,7 @@ export const adminAPI = {
   },
   
   updateSuperAgentCommison: async (filters: ApproveAgent): Promise<any> => {
-    const response = await apiClient.post(`${paths.updateSuperAgentCommison}/${filters.id}`, filters);
+    const response = await apiClient.post(`${paths.updateSuperAgentCommison}`, filters);
     return response.data;
   },
 
