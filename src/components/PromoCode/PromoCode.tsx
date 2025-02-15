@@ -117,17 +117,16 @@ const PromoCodePage: React.FC = () => {
         return;
       }
     }
-    // Build the payload. For targetedUsers, if "all" is selected, leave userIds empty.
+    // Build the payload. For targetedUsers, if "all" is selected, leave userIds as an empty array.
     const payload = {
       code: formData.code,
       description: formData.description,
-      validFor: formData.validFor.toUpperCase(), // e.g. ALL, AGENT, CUSTOMER
+      validFor: formData.validFor,
       discountType: formData.discountType,
       discountValue: Number(formData.discountValue),
       maxUsagePerUser: Number(formData.maxUsagePerUser),
       totalUsageLimit: Number(formData.totalUsageLimit),
       totalUsageCount: 0,
-      // For FIXED, you might allow any value. For PERCENTAGE, discountValue already validated.
       maxDiscountAmount:
         formData.discountType === "FIXED" ? Number(formData.discountValue) : undefined,
       startDate: new Date().toISOString(),
@@ -136,16 +135,16 @@ const PromoCodePage: React.FC = () => {
       userUsage: [],
       targetedUsers:
         formData.validFor === "all"
-          ? { userIds: "", userType: "all", userModel: "" }
+          ? { userIds: [] as string[], userType: "all", userModel: "" }
           : formData.validFor === "agent"
           ? {
-              userIds: formData.targetedUserIds.join(","),
+              userIds: formData.targetedUserIds,
               userType: "agent",
               userModel: "User",
             }
           : formData.validFor === "customer"
           ? {
-              userIds: formData.targetedUserIds.join(","),
+              userIds: formData.targetedUserIds,
               userType: "customer",
               userModel: "Agent",
             }
@@ -153,7 +152,7 @@ const PromoCodePage: React.FC = () => {
     };
 
     try {
-        // @ts-ignore
+      // @ts-ignore
       await adminAPI.createPromoCode(payload);
       toast.success("Promo code created successfully");
       setShowForm(false);
