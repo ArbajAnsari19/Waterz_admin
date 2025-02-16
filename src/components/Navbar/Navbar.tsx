@@ -29,11 +29,11 @@ const Navbar: React.FC = () => {
         }
     }, [dispatch]);
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('userData');
-        dispatch(clearUserDetails());
-    };
+    // const handleLogout = () => {
+    //     localStorage.removeItem('token');
+    //     localStorage.removeItem('userData');
+    //     dispatch(clearUserDetails());
+    // };
 
     return (
         <div className={styles.comp_body}>
@@ -64,8 +64,8 @@ const Navbar: React.FC = () => {
                         </div> */}
                     </div>
                 ) : (
-                    <Link to="/signup">
-                        <div className={styles.item}>SignUp</div>
+                    <Link to="/login">
+                        <div className={styles.item}>login</div>
                     </Link>
                 )}
             </div>
