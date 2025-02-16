@@ -21,6 +21,7 @@ const PromoCodePage: React.FC = () => {
   const [customers, setCustomers] = useState<Customer[]>([]);
 
   const [formData, setFormData] = useState({
+    _id: "",
     code: "",
     description: "",
     validFor: "all", // options: all, agent, customer
@@ -109,6 +110,14 @@ const PromoCodePage: React.FC = () => {
   // Submit the new promo code form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Validate promo code format
+    const promoCodeRegex = /^[A-Z0-9]{6,12}$/;
+    if (!promoCodeRegex.test(formData.code)) {
+      toast.error(
+        "Invalid promo code format. Must be 6-12 characters long, only uppercase letters (A-Z) and numbers (0-9) allowed."
+      );
+      return;
+    }
     // Validate discount value if percentage
     if (formData.discountType === "PERCENTAGE") {
       const discount = Number(formData.discountValue);
@@ -164,25 +173,8 @@ const PromoCodePage: React.FC = () => {
 
   // Deactivate an active promo code by sending a payload with isActive false
   const handleDeactivate = async (promo: PromoCode) => {
-    const payload = {
-      code: promo.code,
-      description: promo.description,
-      validFor: promo.validFor,
-      discountType: promo.discountType,
-      discountValue: promo.discountValue,
-      maxUsagePerUser: promo.maxUsagePerUser,
-      totalUsageLimit: promo.totalUsageLimit,
-      totalUsageCount: promo.totalUsageCount,
-      minBookingAmount: promo.minBookingAmount,
-      maxDiscountAmount: promo.maxDiscountAmount,
-      startDate: promo.startDate,
-      expiryDate: promo.expiryDate,
-      isActive: false,
-      userUsage: promo.userUsage,
-      targetedUsers: promo.targetedUsers,
-    };
     try {
-      await adminAPI.createPromoCode(payload);
+      await adminAPI.deactivateCode(promo._id!);
       toast.success("Promo code deactivated");
       fetchPromoCodes();
     } catch (error) {
@@ -208,6 +200,9 @@ const PromoCodePage: React.FC = () => {
               onChange={handleInputChange}
               required
             />
+            <small className={styles.helperText}>
+              Must be 6-12 characters long. Can only contain uppercase letters (A-Z) and numbers (0-9). No special characters or spaces allowed.
+            </small>
           </div>
           <div className={styles.formGroup}>
             <label>Description</label>
@@ -229,8 +224,7 @@ const PromoCodePage: React.FC = () => {
           {formData.validFor !== "all" && (
             <div className={styles.formGroup}>
               <label>
-                Select {formData.validFor === "agent" ? "Agents" : "Customers"} (hold Ctrl to
-                select multiple)
+                Select {formData.validFor === "agent" ? "Agents" : "Customers"} (hold Ctrl to select multiple)
               </label>
               <select
                 multiple
@@ -266,8 +260,7 @@ const PromoCodePage: React.FC = () => {
           </div>
           <div className={styles.formGroup}>
             <label>
-              Discount Value{" "}
-              {formData.discountType === "PERCENTAGE" && "(0-100)"}
+              Discount Value {formData.discountType === "PERCENTAGE" && "(0-100)"}
             </label>
             <input
               type="number"
@@ -334,18 +327,14 @@ const PromoCodePage: React.FC = () => {
                   <strong>Usage:</strong> {promo.totalUsageCount}/{promo.totalUsageLimit}
                 </p>
                 <p>
-                  <strong>Expiry:</strong>{" "}
-                  {new Date(promo.expiryDate).toLocaleString()}
+                  <strong>Expiry:</strong> {new Date(promo.expiryDate).toLocaleString()}
                 </p>
                 <p>
                   <strong>Status:</strong> {promo.isActive ? "Active" : "Inactive"}
                 </p>
               </div>
               {promo.isActive && (
-                <button
-                  className={styles.deactivateButton}
-                  onClick={() => handleDeactivate(promo)}
-                >
+                <button className={styles.deactivateButton} onClick={() => handleDeactivate(promo)}>
                   Deactivate
                 </button>
               )}

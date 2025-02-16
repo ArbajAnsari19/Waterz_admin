@@ -1,11 +1,43 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from '../../styles/Navbar/AdminNav.module.css';
-import { Menu, X, LayoutDashboard, BadgePercent , Ship, Calendar, Users, MessageCircleQuestion , UserCircle, DollarSign, PlusCircle, House } from 'lucide-react';
+import {  useAppDispatch } from '../../redux/store/hook';
+import { clearUserDetails } from '../../redux/slices/userSlice';
+import {
+  Menu,
+  X,
+  LayoutDashboard,
+  BadgePercent,
+  LogOut,
+  Ship,
+  Calendar,
+  Users,
+  MessageCircleQuestion,
+  UserCircle,
+  DollarSign,
+  PlusCircle,
+  House
+} from 'lucide-react';
 
 const AdminNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleLogout = () => {
+    // Remove token and user data from local storage
+    localStorage.removeItem('token');
+    localStorage.removeItem('userData');
+    dispatch(clearUserDetails());
+    // Optionally, dispatch any logout actions if using Redux
+    // Then navigate to login page
+    navigate('/');
+  };
 
   const navItems = [
     { path: '/', label: 'Home', icon: House },
@@ -19,11 +51,9 @@ const AdminNavbar = () => {
     { path: '/add', label: 'Add', icon: PlusCircle },
     { path: '/queries', label: 'Queries', icon: MessageCircleQuestion },
     { path: '/promo-codes', label: 'Promo Code', icon: BadgePercent },
+    // Logout will be handled with a custom click function instead of a Link
+    { path: '/logout', label: 'Logout', icon: LogOut },
   ];
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
 
   return (
     <>
@@ -39,6 +69,22 @@ const AdminNavbar = () => {
         <div className={styles.navContent}>
           {navItems.map((item) => {
             const Icon = item.icon;
+            // If the item is Logout, override onClick with handleLogout.
+            if (item.label === "Logout") {
+              return (
+                <button
+                  key={item.path}
+                  className={styles.navItem2} 
+                  onClick={() => {
+                    setIsOpen(false);
+                    handleLogout();
+                  }}
+                >
+                  <Icon size={20} />
+                  <span>{item.label}</span>
+                </button>
+              );
+            }
             return (
               <Link
                 to={item.path}

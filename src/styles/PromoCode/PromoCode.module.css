@@ -63,6 +63,12 @@
     font-family: inherit;
   }
   
+  .helperText {
+    font-size: 13px;
+    color: #64748B;
+    margin-top: 0.3rem;
+  }
+  
   .submitButton {
     background-color: #2B6BE7;
     color: white;

@@ -398,4 +398,9 @@ export const adminAPI = {
     return response.data;
   },
 
+  deactivateCode: async (id: string): Promise<any> => {
+    const response = await apiClient.post(`${paths.deactivatePromoCode}/${id}`);
+    return response.data;
+  }
+
 };

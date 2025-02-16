@@ -32,6 +32,25 @@
     background: #e2e8f0;
     color: #1e40af;
   }
+
+  .navItem2 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: #64748b;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    border: none;
+    background: none;
+    font-size: 16px;
+  }
+  
+  .navItem2:hover {
+    background: #e2e8f0;
+    color: #1e40af;
+  }
   
   .active {
     background: #e2e8f0;

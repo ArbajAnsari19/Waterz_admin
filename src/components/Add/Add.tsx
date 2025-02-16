@@ -12,7 +12,7 @@ const Add: React.FC = () => {
       <h1 className={styles.title}>Add Yachts, Agents, Super Agents</h1>
 
       <div className={styles.cardsContainer}>
-        <div className={styles.card}>
+        {/* <div className={styles.card}>
           <img 
             src={addY}
             alt="Yacht Management" 
@@ -27,7 +27,7 @@ const Add: React.FC = () => {
           >
             Add Yacht
           </button>
-        </div>
+        </div> */}
 
         <div className={styles.card}>
           <img 

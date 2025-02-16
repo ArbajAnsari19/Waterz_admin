@@ -77,6 +77,8 @@ export const paths = {
 
   getAllPromoCodes: `${admin}/getAllPromoCodes`,
   generatePromoCode: `${admin}/generate-promo-code`,
+  deactivatePromoCode: `${admin}/deactivate-promo-code`,
+
 };
 
 
