@@ -65,6 +65,7 @@ export const paths = {
   getYatchOwner: `${admin}/yatchOwner`,
   getAllBookingByOwner: `${admin}/owners-Booking`,
   getAnalytics: `${admin}/analytics`,
+  getYatchDetail: `${admin}/getYatchDetail`,
   getDashboardData: `${admin}/getAdminDashboard`,
   deleteCustomer: `${admin}/delete-customer`,
 

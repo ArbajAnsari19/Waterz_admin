@@ -7,6 +7,7 @@ import { CreateYachtRequest } from "../types/createYacht";
 export const yachtAPI = {
     getAllYachts: async (): Promise<Yacht[]> => {
       const response = await apiClient.get(paths.getYachtList);
+      console.log("Respons data is here :",response.data);
       return response.data;
     },
 
@@ -36,7 +37,7 @@ export const yachtAPI = {
     },
 
     getYachtById: async (yachtId: string): Promise<Yacht> => {
-      const response = await apiClient.get(`${paths.getYachtById}/${yachtId}`);
+      const response = await apiClient.get(`${paths.getYatchDetail}/${yachtId}`);
       return response.data;
     },
     createYacht: async (yacht: CreateYachtRequest): Promise<CreateYachtRequest> => {

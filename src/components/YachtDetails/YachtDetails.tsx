@@ -98,7 +98,7 @@ const YachtDetails: React.FC = () => {
   const [yacht, setYacht] = useState<Yacht | null>(null);
   const [loading, setLoading] = useState(true);
   const [pricingLoading, setPricingLoading] = useState(false);
-  const [showPricingPanel, setShowPricingPanel] = useState(false);
+  const [, setShowPricingPanel] = useState(false);
   const [prices, setPrices] = useState<SetPrices>({
     peak: { sailing: "", anchoring: "" },
     nonPeak: { sailing: "", anchoring: "" },
