@@ -4,7 +4,6 @@ import { useAppDispatch } from "../../redux/store/hook";
 import { setUserDetails } from "../../redux/slices/userSlice";
 import styles from "../../styles/LoginSignup/Login.module.css";
 import loginPic from "../../assets/LoginSignUp/signup.webp";
-import googleIcon from "../../assets/LoginSignUp/google.svg";
 import { authAPI } from "../../api/auth";
 
 const LoginForm = () => {
@@ -45,7 +44,7 @@ const LoginForm = () => {
         }));
       }
       
-      navigate('/booking');
+      navigate('/dashboard');
       
     } catch (err: any) {
       const errorMessage = err.type === 'AUTH_ERROR' 
@@ -102,7 +101,7 @@ const LoginForm = () => {
               {isLoading ? 'Logging in...' : 'Log In'}
             </button>
 
-            <div className={styles.divider}>
+            {/* <div className={styles.divider}>
               <span>or</span>
             </div>
 
@@ -117,7 +116,7 @@ const LoginForm = () => {
 
             <p className={styles.loginPrompt}>
               Don't have an account? <a href="/signup" className={styles.link}>Sign Up</a>
-            </p>
+            </p> */}
           </form>
         </div>
 

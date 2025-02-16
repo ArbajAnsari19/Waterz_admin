@@ -126,7 +126,7 @@ const Yachts: React.FC = () => {
             name={yacht.name}
             capacity={yacht.capacity}
             startingPrice={yacht.startingPrice}
-            imageUrl={yacht.images[0]}
+            images={yacht.images}
             yachtId={yacht._id}
             listStatus={(yacht.isVerifiedByAdmin as 'requested' | 'accepted' | 'denied')}
           />

@@ -86,10 +86,15 @@ const Home: React.FC = () => {
                 >
                   {yachts.map((yacht) => (
                     <SwiperSlide key={yacht._id}>
-                      <YachtCard
-                        key={yacht._id}
-                        yacht={yacht}
-                      />
+                        <YachtCard
+                          key={yacht._id}
+                          yachtId={yacht._id}
+                          name={yacht.name}
+                          capacity={yacht.capacity}
+                          startingPrice={`$${yacht.price.sailing.nonPeakTime}`}
+                          images={yacht.images}  
+                          listStatus={yacht.isVerifiedByAdmin || "requested"} 
+                        />
                     </SwiperSlide>
                   ))}
                 </Swiper>
