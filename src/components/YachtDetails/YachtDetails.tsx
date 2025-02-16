@@ -116,17 +116,19 @@ const YachtDetails: React.FC = () => {
       try {
         setLoading(true);
         const data = await yachtAPI.getYachtById(yachtId);
-        setYacht(data);
+        // @ts-ignore
+        const yacht = data.yatch;
+        setYacht(yacht);
         // Pre-fill pricing state from yacht data if available
-        if (data && data.price) {
+        if (data && yacht.price) {
           setPrices({
             peak: {
-              sailing: data.price.sailing.peakTime?.toString() || "",
-              anchoring: data.price.anchoring?.peakTime?.toString() || "",
+              sailing: yacht.price.sailing.peakTime || "",
+              anchoring: yacht.price.anchoring?.peakTime || "",
             },
             nonPeak: {
-              sailing: data.price.sailing.nonPeakTime?.toString() || "",
-              anchoring: data.price.anchoring.nonPeakTime?.toString() || "",
+              sailing: yacht.price.sailing.nonPeakTime || "",
+              anchoring: yacht.price.anchoring.nonPeakTime || "",
             },
           });
         }
