@@ -216,7 +216,7 @@ const PromoCodePage: React.FC = () => {
           <div className={styles.formGroup}>
             <label>Valid For</label>
             <select name="validFor" value={formData.validFor} onChange={handleInputChange}>
-              <option value="all">All</option>
+              {/* <option value="all">All</option> */}
               <option value="agent">Agent</option>
               <option value="customer">Customer</option>
             </select>
@@ -231,7 +231,7 @@ const PromoCodePage: React.FC = () => {
                 onChange={handleTargetedUserChange}
                 value={formData.targetedUserIds}
               >
-                <option value="">Select All</option>
+                {/* <option value="">Select All</option> */}
                 {formData.validFor === "agent" &&
                   agents.map((agent) => (
                     <option key={agent._id} value={agent._id}>

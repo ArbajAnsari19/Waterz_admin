@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../../styles/Add/Add.module.css';
 import addA from "../../assets/Yatch/addA.svg";
-import addY from "../../assets/Yatch/addY.svg";
 import addSA from "../../assets/Yatch/addSA.svg";
 const Add: React.FC = () => {
   const navigate = useNavigate();

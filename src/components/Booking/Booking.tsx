@@ -16,8 +16,8 @@ const Booking: React.FC = () => {
   const [searchName, setSearchName] = useState(initialSearchName || initialDisplayName);
 
   const [bookings, setBookings] = useState<BookingData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [, setIsLoading] = useState(true);
+  const [, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState<BookingFilters>({
     status: "all",
     bookedBy: "all",
