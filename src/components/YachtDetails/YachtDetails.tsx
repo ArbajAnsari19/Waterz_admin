@@ -116,8 +116,10 @@ const YachtDetails: React.FC = () => {
       try {
         setLoading(true);
         const data = await yachtAPI.getYachtById(yachtId);
+        // console.log("data", data)
         // @ts-ignore
-        const yacht = data.yatch;
+        const yacht = data.yacht;
+        // console.log("yachtt", yacht)
         setYacht(yacht);
         // Pre-fill pricing state from yacht data if available
         if (data && yacht.price) {
