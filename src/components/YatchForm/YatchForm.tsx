@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import styles from '../../styles/YatchForm/YatchForm.module.css';
 import Select, { GroupBase, MultiValue } from 'react-select';
 import { NumericFormat } from 'react-number-format';
@@ -6,6 +6,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { uploadToCloudinary } from '../../utils/cloudinary';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { toast } from "react-toastify";
+import { adminAPI } from "../../api/admin";
 
 // New interfaces for add-on services (if not imported from types)
 interface AddonService {
@@ -15,6 +17,7 @@ interface AddonService {
 
 // Updated YachtFormData interface to include new pricing, addon, and package details
 interface YachtFormData {
+  ownerId: string;
   name: string;
   pickupat: string;
   location: string;
@@ -56,6 +59,11 @@ interface YachtFormData {
 interface LocationOption {
   label: string;
   value: string;
+}
+
+interface Owner {
+  _id: string;
+  name: string;
 }
 
 // New pickup location options
@@ -126,8 +134,10 @@ const YachtForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-
+  const [owners, setOwners] = useState<Owner[]>([]);
+  const [selectedOwner, setSelectedOwner] = useState<{ label: string; value: string } | null>(null);
   const [formData, setFormData] = useState<YachtFormData>({
+    ownerId: '',
     name: '',
     location: '',
     pickupat: '',
@@ -203,6 +213,30 @@ const YachtForm = () => {
       ...prev,
       pickupat: selected.value,
       location: selected.label
+    }));
+  };
+
+  // Fetch owners when component mounts
+  const fetchOwners = async () => {
+    try {
+      const res = await adminAPI.getAllOwners();
+      // @ts-ignore
+      setOwners(res.owners);
+    } catch (error) {
+      toast.error("Failed to fetch agents");
+    }
+  };
+
+  useEffect(() => {
+    fetchOwners();
+  }, []);
+
+  // Handler for owner select change
+  const handleOwnerChange = (selected: { label: string; value: string } | null) => {
+    setSelectedOwner(selected);
+    setFormData(prev => ({
+      ...prev,
+      ownerId: selected ? selected.value : ''
     }));
   };
 
@@ -359,6 +393,20 @@ const YachtForm = () => {
           />
           {errors.name && <span className={styles.errorMessage}>{errors.name}</span>}
         </div>
+
+        {/* <div className={styles.formRow}> */}
+        <div className={styles.formGroup}>
+          <label htmlFor="owner">Select Owner*</label>
+          <Select
+            id="owner"
+            options={owners.map(owner => ({ value: owner._id, label: owner.name }))}
+            value={selectedOwner}
+            onChange={handleOwnerChange}
+            className={errors.ownerId ? styles.error : styles.selectContainer2}
+          />
+          {errors.ownerId && <span className={styles.errorMessage}>{errors.ownerId}</span>}
+        </div>
+        {/* </div> */}
 
         <div className={styles.formGroup}>
           <label htmlFor="photos">Add Photos or Videos*</label>

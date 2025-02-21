@@ -1,4 +1,5 @@
-const URL = "http://localhost:8000";
+const URL = "https://waterz-backend.onrender.com"; 
+// const URL = "http://localhost:8000"; //local server
 const userBaseURL = URL + "/user";
 const signUp = URL + "/auth";
 const booking = URL + "/booking";
@@ -62,6 +63,7 @@ export const paths = {
   getAllSuperAgents: `${admin}/getFilteredSuperAgents`,
   getAllAgents: `${admin}/filtered-agent`,
   getAgents: `${admin}/getAllAgents`,
+  getOwners: `${admin}/getAllOwners`,
   getYatchOwner: `${admin}/yatchOwner`,
   getAllBookingByOwner: `${admin}/owners-Booking`,
   getAnalytics: `${admin}/analytics`,

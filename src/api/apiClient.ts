@@ -8,7 +8,8 @@ interface CustomError {
 }
 export const apiClient: AxiosInstance = axios.create({
   
-  baseURL: 'http://localhost:8000',
+  baseURL: 'https://waterz-backend.onrender.com', 
+  // baseURL: 'http://localhost:8000', // local server
   timeout: 20000,
   withCredentials: true,
   headers: {
@@ -90,7 +91,8 @@ apiClient.interceptors.response.use(
 );
 
 export const nonAuthApiClient: AxiosInstance = axios.create({
-  baseURL: 'http://localhost:8000',
+  baseURL: 'https://waterz-backend.onrender.com', 
+  // baseURL: 'http://localhost:8000', // local server
   timeout: 20000,
   withCredentials: false,
   headers: {

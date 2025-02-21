@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../../styles/Add/Add.module.css';
+import addY from "../../assets/Yatch/addY.svg";
 import addA from "../../assets/Yatch/addA.svg";
 import addSA from "../../assets/Yatch/addSA.svg";
 const Add: React.FC = () => {
@@ -11,7 +12,7 @@ const Add: React.FC = () => {
       <h1 className={styles.title}>Add Yachts, Agents, Super Agents</h1>
 
       <div className={styles.cardsContainer}>
-        {/* <div className={styles.card}>
+        <div className={styles.card}>
           <img 
             src={addY}
             alt="Yacht Management" 
@@ -26,7 +27,7 @@ const Add: React.FC = () => {
           >
             Add Yacht
           </button>
-        </div> */}
+        </div>
 
         <div className={styles.card}>
           <img 

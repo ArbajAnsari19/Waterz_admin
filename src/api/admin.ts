@@ -296,6 +296,10 @@ export const adminAPI = {
     const response = await apiClient.get(paths.getAgents);
     return response.data;
   },
+  getAllOwners: async (): Promise<AgentResponse> => {
+    const response = await apiClient.get(paths.getOwners);
+    return response.data;
+  },
   getSuperAgents: async (filters: SuperAgentFilters): Promise<SuperAgentResponse> => {
     const response = await apiClient.post(paths.getAllSuperAgents, filters);
     return response.data;

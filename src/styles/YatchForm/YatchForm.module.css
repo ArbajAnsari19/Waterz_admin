@@ -47,6 +47,10 @@
   margin-bottom: 0.5rem;
 }
 
+.selectContainer2 {
+  margin-bottom: 0.5rem;
+}
+
 .formGroup textarea {
   min-height: 80px;
   resize: vertical;
