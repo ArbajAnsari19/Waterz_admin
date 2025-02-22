@@ -42,7 +42,7 @@ export const yachtAPI = {
     },
     createYacht: async (yacht: CreateYachtRequest): Promise<CreateYachtRequest> => {
       const token = localStorage.getItem('token');
-      const response = await apiClient.post(paths.createYacht, yacht, {
+      const response = await apiClient.post(paths.createAdminYacht, yacht, {
         headers: {
           Authorization: `Bearer ${token}`
         }

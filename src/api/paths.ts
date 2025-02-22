@@ -1,5 +1,5 @@
-const URL = "https://waterz-backend.onrender.com"; 
-// const URL = "http://localhost:8000"; //local server
+// const URL = "https://waterz-backend.onrender.com"; 
+const URL = "http://localhost:8000"; //local server
 const userBaseURL = URL + "/user";
 const signUp = URL + "/auth";
 const booking = URL + "/booking";
@@ -81,6 +81,7 @@ export const paths = {
   getAllPromoCodes: `${admin}/getAllPromoCodes`,
   generatePromoCode: `${admin}/generate-promo-code`,
   deactivatePromoCode: `${admin}/deactivate-promo-code`,
+  createAdminYacht: `${admin}/createAdminYacht`,
 
 };
 

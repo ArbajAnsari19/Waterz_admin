@@ -86,7 +86,7 @@ const Review: React.FC = () => {
         await yachtAPI.createYacht(yachtData);
       }
       // Navigate to success page
-      navigate("/my-bookings");
+      navigate("/yachts");
     } catch (error) {
       console.error("Failed to process yacht:", error);
       setError("Failed to process yacht. Please try again.");
