@@ -131,9 +131,9 @@ const YachtForm = () => {
   const [selectedLocation, setSelectedLocation] = useState<LocationOption | null>(null);
   const [selectedAddons, setSelectedAddons] = useState<MultiValue<{ label: string; value: string }>>([]);
   const [selectedPackages, setSelectedPackages] = useState<MultiValue<{ label: string; value: string }>>([]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting,] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitSuccess,] = useState(false);
   const [owners, setOwners] = useState<Owner[]>([]);
   const [selectedOwner, setSelectedOwner] = useState<{ label: string; value: string } | null>(null);
   const [formData, setFormData] = useState<YachtFormData>({

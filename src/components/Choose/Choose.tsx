@@ -35,8 +35,13 @@ const Choose: React.FC = () => {
             <div className={styles.yachtGrid}>
                 {yachtes?.map((yacht) => (
                     <YachtCard
-                        key={yacht._id}
-                        yacht={yacht}
+                    key={yacht._id}
+                    yachtId={yacht._id}
+                    name={yacht.name}
+                    capacity={yacht.capacity}
+                    startingPrice={`$${yacht.price.sailing.nonPeakTime}`}
+                    images={yacht.images}  
+                    listStatus={yacht.isVerifiedByAdmin || "requested"} 
                     />
                 ))}
             </div>
