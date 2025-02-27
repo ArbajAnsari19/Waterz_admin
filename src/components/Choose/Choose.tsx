@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../../styles/Choose/Choose.module.css";
 import YachtCard from "../Layouts/YatchCard";
 import { useYachts } from "../../hooks/useYachts";
-import { useLocation, Navigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Yacht } from "../../types/yachts";
 
 interface LocationState {
